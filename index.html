@@ -61,6 +61,46 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-为什么要覆盖jQuery()的原型对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/13/为什么要覆盖jQuery()的原型对象/" class="article-date">
+  <time datetime="2018-08-13T14:33:12.166Z" itemprop="datePublished">2018-08-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>jQuery构造对象函数有：</p>
+<ol>
+<li>jQuery([selector,[context]])</li>
+<li>jQuery(element)</li>
+<li>jQuery(elementArray)</li>
+<li>jQuery(object)</li>
+<li>jQuery(jQuery object)</li>
+<li>jQuery(html,[ownerDocument])</li>
+<li>jQuery(html,[attributes])</li>
+<li>jQuery()</li>
+<li>jQuery(callback)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">function(window,undefined)&#123;</div><div class="line">var jQuery=(function()&#123;</div><div class="line">    var jQuery = function( selector, context ) &#123;</div><div class="line">        return new jQuery.fn.init( selector, context );</div><div class="line">        //这里用new，省去了构造函数jQuery()前面的运算符new，因此我们可以直接写jQuery()</div><div class="line">    &#125;,</div><div class="line">    //一堆局部变量声明</div><div class="line">    rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,</div><div class="line">    rmsPrefix = /^-ms-/,</div><div class="line">    rdashAlpha = /-([\da-z])/gi,</div><div class="line">    fcamelCase = function( all, letter ) &#123;</div><div class="line">        return letter.toUpperCase();</div><div class="line">    &#125;;</div><div class="line">    //覆盖构造函数jQuery的原型对象</div><div class="line">    jQuery.fn = jQuery.prototype =&#123;</div><div class="line">    .....//一堆原型属性和原型方法</div><div class="line">    &#125;;</div><div class="line">    jQuery.extend = jQuery.fn.extend = function()&#123;</div><div class="line">    ....//</div><div class="line">    &#125;;</div><div class="line">    //jQuery.extend()和jQuery.fn.extend()，用于合并两个或多个对象的属性到第一个对象</div><div class="line">    jQuery.extend(&#123;</div><div class="line">    //一堆静态属性和方法</div><div class="line">    &#125;);</div><div class="line">    return jQuery;</div><div class="line">    &#125;)();</div><div class="line">    //其他模块代码</div><div class="line">    window.jQuery=window.$=jQuery;</div><div class="line">    &#125;)(window);1234567891011121314151617181920212223242526272829</div></pre></td></tr></table></figure>
+<h3 id="为什么要覆盖jQuery-的原型对象jQuery-prototype"><a href="#为什么要覆盖jQuery-的原型对象jQuery-prototype" class="headerlink" title="为什么要覆盖jQuery()的原型对象jQuery.prototype"></a>为什么要覆盖jQuery()的原型对象jQuery.prototype</h3><p>因为在原型对象jQuery.prototype上定义的属性和方法会被所有jQuery对象继承，可以有效的减少每个jQuery对象所需的内存。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/13/为什么要覆盖jQuery()的原型对象/" data-id="cjksds6jp0000agi6erfui2ax" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/08/13/hello-world/" class="article-date">
@@ -205,6 +245,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/08/13/为什么要覆盖jQuery()的原型对象/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2018/08/13/hello-world/">Hello World</a>
